@@ -38,9 +38,17 @@ const LeadsTable = ({
     try {
       const data = await getLeads(page);
 
-      setLeads(data.data);
+      console.log(data);
 
-      setTotalPages(data.totalPages);
+      setLeads(
+        data.data.leads || data.data
+      );
+
+      setTotalPages(
+        data.data.totalPages ||
+          data.totalPages ||
+          1
+      );
     } catch (error) {
       console.log(error);
     }
@@ -59,29 +67,40 @@ const LeadsTable = ({
   return (
     <div className="bg-white rounded-2xl shadow-sm mt-8 overflow-hidden">
       <div className="p-5 border-b flex items-center justify-between">
-  <h2 className="text-xl font-semibold">
-    Recent Leads
-  </h2>
+        <h2 className="text-xl font-semibold text-black">
+          Recent Leads
+        </h2>
 
-  <button
-    onClick={() =>
-      exportToCSV(leads)
-    }
-    className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
-  >
-    Export CSV
-  </button>
-</div>
-         
+        <button
+          onClick={() =>
+            exportToCSV(leads)
+          }
+          className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
+        >
+          Export CSV
+        </button>
+      </div>
 
       <table className="w-full">
         <thead className="bg-gray-50">
           <tr>
-            <th className="text-left p-4">Name</th>
-            <th className="text-left p-4">Email</th>
-            <th className="text-left p-4">Status</th>
-            <th className="text-left p-4">Source</th>
-            <th className="text-left p-4">
+            <th className="text-left p-4 text-black">
+              Name
+            </th>
+
+            <th className="text-left p-4 text-black">
+              Email
+            </th>
+
+            <th className="text-left p-4 text-black">
+              Status
+            </th>
+
+            <th className="text-left p-4 text-black">
+              Source
+            </th>
+
+            <th className="text-left p-4 text-black">
               Actions
             </th>
           </tr>
@@ -116,11 +135,11 @@ const LeadsTable = ({
                 key={lead._id}
                 className="border-t hover:bg-gray-50"
               >
-                <td className="p-4 font-medium">
+                <td className="p-4 font-medium text-black">
                   {lead.name}
                 </td>
 
-                <td className="p-4 text-gray-600">
+                <td className="p-4 text-gray-700">
                   {lead.email}
                 </td>
 
@@ -130,7 +149,7 @@ const LeadsTable = ({
                   </span>
                 </td>
 
-                <td className="p-4">
+                <td className="p-4 text-black">
                   {lead.source}
                 </td>
 
@@ -160,7 +179,7 @@ const LeadsTable = ({
           Previous
         </button>
 
-        <span className="font-semibold">
+        <span className="font-semibold text-black">
           Page {page} of {totalPages}
         </span>
 
